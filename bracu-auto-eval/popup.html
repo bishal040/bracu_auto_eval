@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BRACU Auto Evaluator</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="logo-area">
+        <div class="logo-icon">⚡</div>
+        <h1>BRACU Auto Eval</h1>
+      </div>
+      <p class="subtitle">Complete all evaluations instantly</p>
+    </div>
+
+    <!-- ACTIVATION SCREEN -->
+    <div id="activationScreen">
+      <div class="activation-section">
+        <div class="lock-icon">🔒</div>
+        <h2 class="activation-title">Activate Extension</h2>
+        <p class="activation-desc">Enter your Student ID and activation key to unlock.</p>
+        
+        <div class="input-group">
+          <label class="setting-label">Student ID</label>
+          <input type="text" id="studentId" class="input-field" placeholder="e.g. 21301000" />
+        </div>
+
+        <div class="input-group">
+          <label class="setting-label">Activation Key</label>
+          <input type="text" id="activationKey" class="input-field" placeholder="AE-XXXX-XXXX-XXXX-XXXX" />
+        </div>
+
+        <button class="btn-evaluate-all" id="btnActivate">
+          <span class="btn-icon">🔓</span>
+          <span class="btn-text">Activate</span>
+        </button>
+        <p class="activation-error" id="activationError" style="display:none;"></p>
+        <p class="activation-hint">Contact the developer for a key.</p>
+      </div>
+    </div>
+
+    <!-- MAIN SCREEN (hidden until activated) -->
+    <div id="mainScreen" style="display:none;">
+      <div class="status-section" id="statusSection">
+        <div class="status-indicator" id="statusIndicator">
+          <span class="status-dot" id="statusDot"></span>
+          <span class="status-text" id="statusText">Checking page...</span>
+        </div>
+      </div>
+
+      <div class="settings-section">
+        <label class="setting-label">Default Rating</label>
+        <div class="rating-selector" id="ratingSelector">
+          <button class="rating-btn" data-value="1">1 😠</button>
+          <button class="rating-btn" data-value="2">2 😟</button>
+          <button class="rating-btn" data-value="3">3 😐</button>
+          <button class="rating-btn" data-value="4">4 🙂</button>
+          <button class="rating-btn active" data-value="5">5 😊</button>
+        </div>
+
+        <label class="setting-label" style="margin-top: 12px;">Speed</label>
+        <div class="speed-selector">
+          <button class="speed-btn" data-speed="fast">⚡ Fast</button>
+          <button class="speed-btn active" data-speed="normal">🚀 Normal</button>
+          <button class="speed-btn" data-speed="slow">🐢 Slow</button>
+        </div>
+      </div>
+
+      <div class="actions-section">
+        <button class="btn-evaluate-all" id="btnEvaluateAll">
+          <span class="btn-icon">🎯</span>
+          <span class="btn-text">Auto Evaluate All Courses</span>
+        </button>
+        <button class="btn-evaluate-current" id="btnEvaluateCurrent">
+          <span class="btn-icon">📝</span>
+          <span class="btn-text">Evaluate Current Course</span>
+        </button>
+      </div>
+
+      <div class="progress-section" id="progressSection" style="display: none;">
+        <div class="progress-header">
+          <span class="progress-label" id="progressLabel">Evaluating...</span>
+          <span class="progress-count" id="progressCount">0/0</span>
+        </div>
+        <div class="progress-bar-container">
+          <div class="progress-bar" id="progressBar"></div>
+        </div>
+        <div class="progress-detail" id="progressDetail"></div>
+      </div>
+
+      <div class="deactivate-section">
+        <button class="btn-deactivate" id="btnDeactivate">🔒 Deactivate / Change Key</button>
+      </div>
+    </div>
+
+    <div class="footer">
+      <span>Made for BRACU Students</span>
+      <span class="version">v3.0</span>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
