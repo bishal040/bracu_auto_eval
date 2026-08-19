@@ -16,34 +16,8 @@
       <p class="subtitle">Complete all evaluations instantly</p>
     </div>
 
-    <!-- ACTIVATION SCREEN -->
-    <div id="activationScreen">
-      <div class="activation-section">
-        <div class="lock-icon">🔒</div>
-        <h2 class="activation-title">Activate Extension</h2>
-        <p class="activation-desc">Enter your Student ID and activation key to unlock.</p>
-        
-        <div class="input-group">
-          <label class="setting-label">Student ID</label>
-          <input type="text" id="studentId" class="input-field" placeholder="e.g. 21301000" />
-        </div>
-
-        <div class="input-group">
-          <label class="setting-label">Activation Key</label>
-          <input type="text" id="activationKey" class="input-field" placeholder="AE-XXXX-XXXX-XXXX-XXXX" />
-        </div>
-
-        <button class="btn-evaluate-all" id="btnActivate">
-          <span class="btn-icon">🔓</span>
-          <span class="btn-text">Activate</span>
-        </button>
-        <p class="activation-error" id="activationError" style="display:none;"></p>
-        <p class="activation-hint">Contact the developer for a key.</p>
-      </div>
-    </div>
-
-    <!-- MAIN SCREEN (hidden until activated) -->
-    <div id="mainScreen" style="display:none;">
+    <!-- MAIN SCREEN -->
+    <div id="mainScreen">
       <div class="status-section" id="statusSection">
         <div class="status-indicator" id="statusIndicator">
           <span class="status-dot" id="statusDot"></span>
@@ -89,10 +63,6 @@
           <div class="progress-bar" id="progressBar"></div>
         </div>
         <div class="progress-detail" id="progressDetail"></div>
-      </div>
-
-      <div class="deactivate-section">
-        <button class="btn-deactivate" id="btnDeactivate">🔒 Deactivate / Change Key</button>
       </div>
     </div>
 

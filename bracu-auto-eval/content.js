@@ -1,39 +1,7 @@
-// BRACU Auto Evaluator v7 — Account-locked activation
+// BRACU Auto Evaluator v8 — Public release
 (function () {
   'use strict';
 
-  // ---- Get the logged-in user's name from the page ----
-  function getLoggedInUser() {
-    // The sidebar shows the user name like "Shiham Mahdin..."
-    const userLink = document.querySelector('.nav-link.dropdown-toggle.text-truncate');
-    if (userLink) return userLink.textContent.trim();
-    // Fallback: look for any truncated name in sidebar
-    const spans = document.querySelectorAll('.text-truncate');
-    for (const s of spans) {
-      const t = s.textContent.trim();
-      if (t.length > 3 && !t.includes('Home') && !t.includes('Course')) return t;
-    }
-    return '';
-  }
-
-  // ---- LICENSE CHECK — verifies key AND logged-in account ----
-  function checkLicense() {
-    return new Promise(resolve => {
-      chrome.storage.local.get('bracuLicense', d => {
-        const lic = d.bracuLicense;
-        if (!lic || !lic.activated) return resolve(false);
-
-        // Check that the current logged-in user matches who activated
-        const currentUser = getLoggedInUser();
-        if (!currentUser) return resolve(true); // Can't detect user (not on dashboard), allow
-        if (lic.lockedUser && currentUser !== lic.lockedUser) {
-          console.log('[BRACU AE] Account mismatch! Expected:', lic.lockedUser, 'Got:', currentUser);
-          return resolve(false);
-        }
-        resolve(true);
-      });
-    });
-  }
 
   const DELAY = { short: 250, med: 500, long: 1000 };
 
@@ -364,7 +332,6 @@
   }
 
   async function startAll(rating, speed) {
-    if (!(await checkLicense())) { sendError('⛔ Not activated or wrong account. Activate with YOUR BRACU login.'); return; }
     if (hasSweetAlert()) { await bg('dismissAlert'); await sleep(300); }
 
     const total = countEvalButtons();
@@ -377,7 +344,6 @@
   }
 
   async function evaluateCurrent(rating, speed) {
-    if (!(await checkLicense())) { sendError('⛔ Not activated or wrong account.'); return; }
     if (hasSweetAlert()) { await bg('dismissAlert'); await sleep(300); }
     if (!isFormVisible()) { sendError('No form open. Click Evaluate first.'); return; }
     sendProgress('Working...', '', 10, 'Filling ratings...');
@@ -391,13 +357,12 @@
     if (msg.action === 'evaluateCurrent') { evaluateCurrent(msg.rating, msg.speed); resp({ok:true}); }
     if (msg.action === 'stopAll') { clearState(); resp({ok:true}); }
     if (msg.action === 'ping') { resp({alive:true, form:isFormVisible(), evals:countEvalButtons()}); }
-    if (msg.action === 'getLoggedInUser') { resp({user: getLoggedInUser()}); }
+    if (msg.action === 'getLoggedInUser') { resp({user: ''}); }
     return true;
   });
 
   async function autoResume() {
     await sleep(2000);
-    if (!(await checkLicense())) return;
     const state = await getState();
     if (state && state.running) {
       console.log('[BRACU AE] Resuming!', state.completed, '/', state.total);
